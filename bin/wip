@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var wip = require('../');
+var exec = require('child_process').exec;
+var chalk = require('chalk');
+
+// has a config command
+if(process.argv[2]){
+  switch(process.argv[2].toLowerCase()){
+    case 'silently':
+      console.log(wip.box(chalk.blue('🔇  I\'ll wip silently from now on :(  🔇 ')));
+      wip.conf.set('sound', false);
+      break;
+    case 'loudly':
+      console.log(wip.box(chalk.green('🔊  Turn those speakers up, we\'re WIPin\' with sound!  🔊 ')));
+      wip.conf.set('sound', true);
+      break;
+    case 'with':
+      //...no need to check for the word 'commitizen' unless we add more options
+      console.log(wip.box(chalk.green('⚡   GIT POWER LEVEL OVER 9000. ⚡\n\n  naenae will now use commitizen.  ')));
+      wip.conf.set('commitizen', true);
+      break;
+    case 'without':
+      console.log(wip.box(chalk.yellow('Alright, naenae will use the default commit message editor.')));
+      wip.conf.set('commitizen', false);
+      break;
+    default:
+    wip.help();
+  }
+  process.exit();
+}
+
+// confirm we're inside a repo (and Git is installed)
+exec('git rev-parse --is-inside-work-tree',
+  function(error, stdout){
+    if(stdout.trim() !== 'true'){
+      wip.sound('stanky-leg', 'Stanky Leg (STANK!)');
+      var help = '\n\nTo start a new one, make sure Git is installed and run:\n\n  $ git init';
+      console.log(wip.box(chalk.red('Couldn\'t find a Git repo.') + help, 'double'));
+      process.exit();
+    }
+
+    // add all files and commit
+    exec('git add -A && git commit -m "WIP"',
+      function(error, stdout){
+        if (error !== null) {
+          console.log(stdout);
+        } else {
+          wip.sound('watch-me-wip', 'Now watch me WIP');
+          console.log('\n\n' + stdout);
+          var heading;
+          if(wip.conf.get('leftHand')){
+            heading = '  👊 ✅  ';
+            wip.conf.set('leftHand', false);
+          } else {
+            heading = '   ✅ 👊  ';
+            wip.conf.set('leftHand', true);
+          }
+          console.log(wip.box(chalk.green(heading + '\n\nWIP saved.')));
+        }
+    });
+});

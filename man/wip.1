@@ -1,0 +1,31 @@
+.TH WIP 1
+.SH NAME
+wip \- the companion to \fBNAENAE\fR
+.SH SYNOPSIS
+.B wip
+[\fIOPTION\fR]
+.SH DESCRIPTION
+.B wip
+provides a simple, user-friendly way of saving your Work In Progress. \fBWIP\fR
+commits all changes in the current Git repository with a message of "WIP".
+.PP
+If something goes wrong, or the user needs to reference a \fBWIP\fR checkpoint,
+a Git repo viewer such as GitHub Desktop (https://desktop.github.com/) can be
+used to review the differences.
+.PP
+Later, when you've completed a logical segment of work, you can \fBNAENAE\fR.
+Please refer to the manual for \fBNAENAE\fR for more information.
+.SH OPTIONS
+.TP
+.B silently
+Turn off sound effects for \fBWIP\fR and \fBNAENAE\fR.
+.TP
+.B loudly
+Turn sound effects on for \fBWIP\fR and \fBNAENAE\fR. Sound effects are enabled
+by default.
+.TP
+.B with commitizen
+Use commitizen when \fBNAENAE\fRing.
+.TP
+.B without commitizen
+Use the default \fBNAENAE\fR commit message editor.

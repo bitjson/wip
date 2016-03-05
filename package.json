@@ -1,0 +1,43 @@
+{
+  "name": "wip",
+  "version": "1.0.0",
+  "description": "wip, wip, and naenae like a boss",
+  "bin": {
+    "wip": "./bin/wip",
+    "naenae": "./bin/naenae"
+  },
+  "man": [
+    "./man/wip.1",
+    "./man/naenae.1"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watch wip --ignoreDotFiles"
+  },
+  "author": "Jason Dreyzehner <jason@dreyzehner.com>",
+  "license": "MIT",
+  "dependencies": {
+    "boxen": "^0.5.0",
+    "chalk": "^1.1.1",
+    "configstore": "^2.0.0",
+    "play-sound": "0.0.7",
+    "update-notifier": "^0.6.1"
+  },
+  "repository": "bitjson/wip.git",
+  "devDependencies": {
+    "cz-conventional-changelog": "^1.1.5",
+    "validate-commit-msg": "^2.2.0",
+    "watch": "^0.17.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
+    },
+    "validate-commit-msg": {
+      "helpMessage": "\nThis project uses commitizen to document changes. Please try:\nnpm install commitizen -g && git cz\n"
+    }
+  }
+}
