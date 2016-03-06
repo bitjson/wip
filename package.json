@@ -1,7 +1,7 @@
 {
   "name": "wip",
-  "version": "1.0.0",
-  "description": "wip, wip, and naenae like a boss",
+  "version": "1.1.0",
+  "description": "command line utilities to better manage WIP (Work In Progress) with Git",
   "bin": {
     "wip": "./bin/wip",
     "naenae": "./bin/naenae"
@@ -23,9 +23,13 @@
     "play-sound": "0.0.7",
     "update-notifier": "^0.6.1"
   },
-  "repository": "bitjson/wip.git",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bitjson/wip.git"
+  },
   "devDependencies": {
     "cz-conventional-changelog": "^1.1.5",
+    "ghooks": "^1.0.3",
     "validate-commit-msg": "^2.2.0",
     "watch": "^0.17.1"
   },
@@ -39,5 +43,16 @@
     "validate-commit-msg": {
       "helpMessage": "\nThis project uses commitizen to document changes. Please try:\nnpm install commitizen -g && git cz\n"
     }
-  }
+  },
+  "keywords": [
+    "cli",
+    "git",
+    "naenae",
+    "wip"
+  ],
+  "bugs": {
+    "url": "https://github.com/bitjson/wip/issues"
+  },
+  "homepage": "https://github.com/bitjson/wip",
+  "main": "index.js"
 }
