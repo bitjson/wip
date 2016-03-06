@@ -1,10 +1,10 @@
 # WIP, WIP, &amp; NAENAE
 
-Using Git like a pro [doesn't have to be hard](https://xkcd.com/1597/).
-
 `wip` and `naenae` are command line utilities to better manage your WIP (Work In Progress) with Git.
 
 `wip` saves your progress by committing the current state of your Git repo with a commit message of "WIP" (a common convention). `naenae` squashes all your "WIP" commits together and lets you give the commit a better title. By periodically saving your progress, you're free to write, rewrite, and ship faster.
+
+![Demo of the wip and naenae command line utilities](/assets/wip-naenae-demo.gif)
 
 ## Install
 
@@ -84,6 +84,9 @@ MIT
 
 ---
 
-Inspired by Silentó - Watch Me (Whip/Nae Nae):
+[![xkcd commic about git](https://imgs.xkcd.com/comics/git.png)](https://xkcd.com/1597/)
+
+
+Naming inspired by Silentó - Watch Me (Whip/Nae Nae):
 
 [![Silentó - Watch Me (Whip/Nae Nae) (Official)](http://img.youtube.com/vi/vjW8wmF5VWc/0.jpg)](http://www.youtube.com/watch?v=vjW8wmF5VWc)
