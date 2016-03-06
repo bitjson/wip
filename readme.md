@@ -1,3 +1,6 @@
+[![npm](https://img.shields.io/npm/v/wip.svg)](https://www.npmjs.com/package/wip) [![npm](https://img.shields.io/npm/dt/wip.svg)](https://www.npmjs.com/package/wip)
+[![npm](https://img.shields.io/npm/l/wip.svg)](https://www.npmjs.com/package/wip)
+
 # WIP, WIP, &amp; NAENAE
 
 `wip` and `naenae` are command line utilities to better manage your WIP (Work In Progress) with Git.
