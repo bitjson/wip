@@ -45,12 +45,13 @@ wip.sound = function (name, fallback){
 };
 
 wip.help = function(){
-  var help = 'Configuration:\n\n';
-  help += '$ wip silently\nwip without sound  🔇 \n\n';
-  help += '$ wip loudly\nwip with sound  🔊 \n\n\n';
-  help += '$ wip with commitizen\nuse commitizen  🚀 \n\n';
-  help += '$ wip without commitizen\nuse default git editor ➖ ';
-  console.log(wip.box(chalk.yellow(help)));
+  var help = chalk.inverse.bold(' wip and naenae ' + pkg.version + ' ') + '\n\n';
+  help += chalk.blue('Settings:') + '\n\n';
+  help += '$ wip silently\n' + chalk.white.dim('wip without sound') + '  🔇 \n\n';
+  help += '$ wip loudly\n' + chalk.white.dim('wip with sound') + '  🔊 \n\n';
+  help += '$ wip with commitizen\n' + chalk.white.dim('use commitizen') + '  🚀 \n\n';
+  help += '$ wip without commitizen\n' + chalk.white.dim('use default git editor') + ' 💩 ';
+  console.log(wip.box(help));
 };
 
 wip.recursiveCountWIPsInBatchesOf = function(maxCount, callback, currentNumber){
