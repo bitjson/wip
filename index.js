@@ -14,7 +14,8 @@ wip.conf = new Configstore(pkg.name, {
   // default config
   sound: true,
   commitizen: false,
-  leftHand: true
+  leftHand: true,
+  emoji: true
 });
 
 wip.box = function(contents, style){
@@ -31,6 +32,25 @@ wip.box = function(contents, style){
   );
 };
 
+wip.emojify = function(content){
+  if(wip.conf.get('emoji') === true){
+    return content;
+  }
+  return '';
+};
+
+wip.help = function(){
+  var help = chalk.inverse.bold(' wip and naenae ' + pkg.version + ' ') + '\n\n';
+  help += chalk.blue('Settings:') + '\n\n';
+  help += '$ wip silently\n' + chalk.white.dim('wip without sound') + wip.emojify('  🔇 ') + '\n\n';
+  help += '$ wip loudly\n' + chalk.white.dim('wip with sound') + wip.emojify('  🔊 ') + '\n\n';
+  help += '$ wip with emoji\n' + chalk.white.dim('show all emoji') + wip.emojify(' 😄 ') + '\n\n';
+  help += '$ wip without emoji\n' + chalk.white.dim('hide all emoji') + wip.emojify(' 😞 ') + '\n\n';
+  help += '$ wip with cz\n' + chalk.white.dim('use commitizen') + wip.emojify('  🚀 ') + '\n\n';
+  help += '$ wip without cz\n' + chalk.white.dim('use default git editor') + wip.emojify(' 💩 ');
+  console.log(wip.box(help));
+};
+
 wip.sound = function (name, fallback){
   if(wip.conf.get('sound')){
     var player = require('play-sound')();
@@ -42,16 +62,6 @@ wip.sound = function (name, fallback){
       }
     });
   }
-};
-
-wip.help = function(){
-  var help = chalk.inverse.bold(' wip and naenae ' + pkg.version + ' ') + '\n\n';
-  help += chalk.blue('Settings:') + '\n\n';
-  help += '$ wip silently\n' + chalk.white.dim('wip without sound') + '  🔇 \n\n';
-  help += '$ wip loudly\n' + chalk.white.dim('wip with sound') + '  🔊 \n\n';
-  help += '$ wip with commitizen\n' + chalk.white.dim('use commitizen') + '  🚀 \n\n';
-  help += '$ wip without commitizen\n' + chalk.white.dim('use default git editor') + ' 💩 ';
-  console.log(wip.box(help));
 };
 
 wip.recursiveCountWIPsInBatchesOf = function(maxCount, callback, currentNumber){
@@ -125,7 +135,8 @@ wip.makeCommit = function (numberOfWIPs){
     if(code === 0){
       // success
       wip.sound('naenae', 'Now watch me naenae');
-      console.log(wip.box(chalk.green('    👋 \n      ✅  \n\nNaeNae complete.\nSquashed ' + numberOfWIPs + ' WIPs.')));
+      console.log(wip.box(chalk.green(wip.emojify('    👋 \n      ✅  \n\n') +
+       'NaeNae complete.\nSquashed ' + numberOfWIPs + ' WIPs.')));
     } else {
       console.log(wip.box(
         chalk.yellow('Commit canceled.') +'\n\n' +

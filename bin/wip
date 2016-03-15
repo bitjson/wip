@@ -8,26 +8,73 @@ var chalk = require('chalk');
 
 // has a config command
 if(process.argv[2]){
-  switch(process.argv[2].toLowerCase()){
+  var arg2 = process.argv[2].toLowerCase();
+  switch(arg2){
     case 'silently':
-      console.log(wip.box(chalk.blue('🔇  I\'ll wip silently from now on :(  🔇 ')));
+      console.log(wip.box(chalk.blue(wip.emojify('🔇  ') +
+        'I\'ll wip silently from now on :(' +
+        wip.emojify('  🔇 '))));
       wip.conf.set('sound', false);
       break;
     case 'loudly':
-      console.log(wip.box(chalk.green('🔊  Turn those speakers up, we\'re WIPin\' with sound!  🔊 ')));
+      console.log(wip.box(chalk.green(wip.emojify('🔊  ') +
+        'Turn those speakers up, we\'re WIPin\' with sound!' +
+        wip.emojify('  🔊 '))));
       wip.conf.set('sound', true);
       break;
     case 'with':
-      //...no need to check for the word 'commitizen' unless we add more options
-      console.log(wip.box(chalk.green('⚡   GIT POWER LEVEL OVER 9000. ⚡\n\n  naenae will now use commitizen.  ')));
-      wip.conf.set('commitizen', true);
-      break;
     case 'without':
-      console.log(wip.box(chalk.yellow('Alright, naenae will use the default commit message editor.')));
-      wip.conf.set('commitizen', false);
+      if(typeof process.argv[3] === 'string'){
+        switch(process.argv[3].toLowerCase()){
+          case 'commitizen':
+          case 'cz':
+            if(arg2 === 'with'){
+              console.log(wip.box(chalk.green(
+                wip.emojify('⚡   ') +
+                'GIT POWER LEVEL OVER 9000.' + wip.emojify(' ⚡') +
+                '\n\n  naenae will now use commitizen.  '
+              )));
+              wip.conf.set('commitizen', true);
+            } else {
+              console.log(wip.box(chalk.yellow(
+                'Alright, naenae will use the default commit message editor.' +
+                wip.emojify('  💩 '))));
+              wip.conf.set('commitizen', false);
+            }
+            break;
+          case 'emoji':
+          case 'e':
+            if(arg2 === 'with'){
+              console.log(wip.box(chalk.yellow(
+                'You\'re WIPin\' with emoji now  😄 '
+              )));
+              wip.conf.set('emoji', true);
+            } else {
+              console.log(wip.box(chalk.yellow(
+                'Alright, wip will not use emoji.'
+              )));
+              wip.conf.set('emoji', false);
+            }
+            break;
+          default:
+            wip.help();
+        }
+      } else {
+          wip.help();
+        }
+      break;
+    case 'done':
+    case 'commit':
+    case 'finish':
+    case 'ok':
+      console.log(wip.box(
+        'Hmmm... I\'m not sure if that\'s possible. Were you trying to' +
+        wip.emojify(' 👋  ') +
+        '$ naenae?'
+      ));
       break;
     default:
-    wip.help();
+      wip.help();
   }
   process.exit();
 }
@@ -47,18 +94,21 @@ exec('git rev-parse --is-inside-work-tree',
       function(error, stdout){
         if (error !== null) {
           console.log(stdout);
+          console.log('Did you mean to $ naenae?\n');
         } else {
-          wip.sound('watch-me-wip', 'Now watch me WIP');
-          console.log('\n\n' + stdout);
-          var heading;
-          if(wip.conf.get('leftHand')){
-            heading = '  👊 ✅  ';
-            wip.conf.set('leftHand', false);
-          } else {
-            heading = '   ✅ 👊  ';
-            wip.conf.set('leftHand', true);
-          }
-          console.log(wip.box(chalk.green(heading + '\n\nWIP saved.')));
+          wip.recursiveCountWIPsInBatchesOf(100, function(numberOfWIPs){
+            console.log('\n\n' + stdout);
+            wip.sound('watch-me-wip', 'Now watch me WIP');
+            var heading;
+            if(wip.conf.get('leftHand')){
+              heading = wip.emojify('  👊 ✅  ');
+              wip.conf.set('leftHand', false);
+            } else {
+              heading = wip.emojify('   ✅ 👊  ');
+              wip.conf.set('leftHand', true);
+            }
+            console.log(chalk.green(wip.box(heading + wip.emojify('\n\n') + 'WIP ' + numberOfWIPs + ' saved.')));
+          });
         }
     });
 });
