@@ -63,6 +63,17 @@ That's terrible! But all is not lost – just:
 $ wip loudly
 ```
 
+### 💩, why can't I see the emoji?
+Unfortunately, some shells don't support emoji. If you're on Windows, you may need to upgrade to something like [Cygwin](https://www.cygwin.com/). If you want to avoid seeing the "unrecognized character" boxes (or if you just hate fun) you can:
+```bash
+$ wip without emoji
+```
+
+And when you're ready to rejoin civilization:
+```bash
+$ wip with emoji
+```
+
 ### All the hipsters use commitizen.
 And you can too! Turn it on:
 ```bash
