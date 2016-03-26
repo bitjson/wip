@@ -90,7 +90,7 @@ exec('git rev-parse --is-inside-work-tree',
     }
 
     // add all files and commit
-    exec('git add -A && git commit -m "WIP"',
+    exec('git add -A && git commit --no-verify -m "WIP"',
       function(error, stdout){
         if (error !== null) {
           console.log(stdout);
