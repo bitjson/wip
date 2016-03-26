@@ -1,6 +1,6 @@
 {
   "name": "wip",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "command line utilities to better manage WIP (Work In Progress) with Git",
   "bin": {
     "wip": "./bin/wip",
