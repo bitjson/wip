@@ -33,6 +33,8 @@ When you've finished a big chunk of work and you're ready to ship it, type this:
 $ naenae
 ```
 
+Naenae will archive your work for safe keeping (using `wip archive`), and then sqash all your WIPs into a single git commit.
+
 ### HELPMEIT'SALLBROKEN
 
 No worries! Thanks to `wip`, you've been meticulously tracking your work with Git, so everything is gonna' be ok.

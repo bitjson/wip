@@ -5,11 +5,38 @@
 var wip = require('../');
 var exec = require('child_process').exec;
 var chalk = require('chalk');
+var execute = true;
 
 // has a config command
 if(process.argv[2]){
+  var exit = true;
+  execute = false;
   var arg2 = process.argv[2].toLowerCase();
   switch(arg2){
+    case 'archive':
+    case 'a':
+      exit = false;
+      wip.confirmGitRepo(function(){
+        exec('git rev-parse --abbrev-ref HEAD',
+          function(error, stdout){
+            var currentBranch = stdout.trim();
+            var timestamp = new Date().toISOString().split('.')[0].replace(/:/g, '_');
+            var branch = 'wip-archive/' + currentBranch + '/' + timestamp;
+            exec('git checkout -b ' + branch,
+              function(error, stdout){
+                console.log(stdout);
+                exec('git checkout ' + currentBranch,
+                  function(error, stdout){
+                    console.log('\n', stdout);
+                    wip.sound('watch-me-wip', 'Now watch me WIP');
+                    console.log(chalk.green(wip.box(
+                      wip.emojify('✅    ') + 'WIP progress archived on branch: ' + branch
+                    )));
+                  });
+              });
+        });
+      });
+      break;
     case 'silently':
       console.log(wip.box(chalk.blue(wip.emojify('🔇  ') +
         'I\'ll wip silently from now on :(' +
@@ -76,19 +103,13 @@ if(process.argv[2]){
     default:
       wip.help();
   }
-  process.exit();
+  if(exit){
+    process.exit();
+  }
 }
 
-// confirm we're inside a repo (and Git is installed)
-exec('git rev-parse --is-inside-work-tree',
-  function(error, stdout){
-    if(stdout.trim() !== 'true'){
-      wip.sound('stanky-leg', 'Stanky Leg (STANK!)');
-      var help = '\n\nTo start a new one, make sure Git is installed and run:\n\n  $ git init';
-      console.log(wip.box(chalk.red('Couldn\'t find a Git repo.') + help, 'double'));
-      process.exit();
-    }
-
+if(execute){
+  wip.confirmGitRepo(function(){
     // add all files and commit
     exec('git add -A && git commit --no-verify -m "WIP"',
       function(error, stdout){
@@ -111,4 +132,5 @@ exec('git rev-parse --is-inside-work-tree',
           });
         }
     });
-});
+  });
+}

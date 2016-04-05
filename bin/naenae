@@ -10,27 +10,32 @@ if(process.argv[2]){
   process.exit();
 }
 
-wip.recursiveCountWIPsInBatchesOf(100, function(numberOfWIPs, includesInitialCommit){
-  if(numberOfWIPs === 0){
-    // nothing to naenae
-    wip.noWipsAvailable();
-  }
-  if(includesInitialCommit){
-    // we can't soft reset first commit
-    numberOfWIPs--;
-  }
-  // soft reset the branch to prepare for commit
-  exec('git reset --soft HEAD~' + numberOfWIPs,
-    function(error){
-      wip.handleGitErrors(error);
-      if(includesInitialCommit){
-        // we'll have to delete HEAD and remake the first commit
-        exec('git update-ref -d HEAD', function(error){
-          wip.handleGitErrors(error);
-          wip.makeCommit(numberOfWIPs + 1);
-        });
-      } else {
-        wip.makeCommit(numberOfWIPs);
-      }
+// attempt to archive without logging
+// (users can always trigger manually if important)
+exec('wip archive', function(){
+
+  wip.recursiveCountWIPsInBatchesOf(100, function(numberOfWIPs, includesInitialCommit){
+    if(numberOfWIPs === 0){
+      // nothing to naenae
+      wip.noWipsAvailable();
+    }
+    if(includesInitialCommit){
+      // we can't soft reset first commit
+      numberOfWIPs--;
+    }
+    // soft reset the branch to prepare for commit
+    exec('git reset --soft HEAD~' + numberOfWIPs,
+      function(error){
+        wip.handleGitErrors(error);
+        if(includesInitialCommit){
+          // we'll have to delete HEAD and remake the first commit
+          exec('git update-ref -d HEAD', function(error){
+            wip.handleGitErrors(error);
+            wip.makeCommit(numberOfWIPs + 1);
+          });
+        } else {
+          wip.makeCommit(numberOfWIPs);
+        }
+    });
   });
 });

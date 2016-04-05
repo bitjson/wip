@@ -64,6 +64,21 @@ wip.sound = function (name, fallback){
   }
 };
 
+// confirm we're inside a repo (and Git is installed)
+wip.confirmGitRepo = function(onSuccess){
+  exec('git rev-parse --is-inside-work-tree',
+    function(error, stdout){
+      if(stdout.trim() !== 'true'){
+        wip.sound('stanky-leg', 'Stanky Leg (STANK!)');
+        var help = '\n\nTo start a new one, make sure Git is installed and run:\n\n  $ git init';
+        console.log(wip.box(chalk.red('Couldn\'t find a Git repo.') + help, 'double'));
+        process.exit();
+      } else {
+        onSuccess();
+      }
+  });
+};
+
 wip.recursiveCountWIPsInBatchesOf = function(maxCount, callback, currentNumber){
   if(!currentNumber){
     currentNumber = 0;
