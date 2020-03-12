@@ -19,9 +19,9 @@
   "dependencies": {
     "boxen": "^0.5.0",
     "chalk": "^1.1.1",
-    "configstore": "^2.0.0",
+    "configstore": "^3.1.0",
     "play-sound": "0.0.7",
-    "update-notifier": "^0.6.1"
+    "update-notifier": "^2.0.0"
   },
   "repository": {
     "type": "git",
