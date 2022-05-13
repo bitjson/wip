@@ -17,11 +17,11 @@
   "author": "Jason Dreyzehner <jason@dreyzehner.com>",
   "license": "MIT",
   "dependencies": {
-    "boxen": "^0.5.0",
-    "chalk": "^1.1.1",
+    "boxen": "^4.0.0",
+    "chalk": "^2.0.0",
     "configstore": "^2.0.0",
     "play-sound": "0.0.7",
-    "update-notifier": "^0.6.1"
+    "update-notifier": "^4.0.0"
   },
   "repository": {
     "type": "git",
